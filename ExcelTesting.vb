@@ -26,6 +26,7 @@ Public NotInheritable Class ExcelTesting
 
     Public Shared Sub CreateExcel(dtable As DataTable)
         Try
+            '-------------- Set necessary variables
             Dim ExcelApp As Object
             ExcelApp = CreateObject("Excel.Application")
 
@@ -38,6 +39,8 @@ Public NotInheritable Class ExcelTesting
             Dim rowAdjust As Integer = 1 'Set content next to headers
             Dim excelCell As String = "B2"
 
+
+            ' -------------- Write Content
             ' Set Headers
             For col = 0 To dtable.Columns.Count - 1
                 sheet.Range(excelCell).Offset(0, col).Value = dtable.Columns.Item(col).ColumnName
@@ -51,6 +54,31 @@ Public NotInheritable Class ExcelTesting
                 Next col
             Next row
 
+            ' --------------- Set style
+            ' Header Style
+            With sheet.Range(sheet.Range(excelCell),
+                             sheet.Range(excelCell).Offset(0, dtable.Columns.Count - 1))
+                .WrapText = True
+                .RowHeight = 40
+                .ColumnWidth = 22
+                .VerticalAlignment = -4108 'CENTER
+                .HorizontalAlignment = -4108
+                .Interior.Color = RGB(25, 94, 131)
+                .Font.Bold = True
+                .Font.Color = RGB(255, 255, 255) 'WHITE
+            End With
+
+            ' Border style
+            With sheet.Range(sheet.Range(excelCell),
+                             sheet.Range(excelCell).Offset(dtable.Rows.Count, dtable.Columns.Count - 1))
+                .VerticalAlignment = -4108 'CENTER
+                .HorizontalAlignment = -4108
+                With .Borders
+                    .LineStyle = 1 'xlContinuous
+                End With
+            End With
+
+            ' --------------- Save Result
             Dim ruta = My.Computer.FileSystem.SpecialDirectories.MyDocuments
             wb.SaveAs(Path.Combine(ruta, "Test", "Excel.xlsx"))
             wb.Close
