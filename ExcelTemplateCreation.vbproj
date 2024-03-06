@@ -115,6 +115,11 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
+    <None Include="README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="docs\created-file.png" />
+    <Content Include="docs\excel-result.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
